@@ -6,7 +6,7 @@
   <meta name="msapplication-tap-highlight" content="no">
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0"/>
-  <title>Starter Template - Materialize</title>
+  <title>Aplicacion Matriculaciones</title>
 
   <!-- CSS  -->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -14,8 +14,8 @@
   <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection"/>
 </head>
 <body>
-  <nav class="light-blue lighten-1" role="navigation">
-    <div class="nav-wrapper container"><a id="logo-container" href="#" class="brand-logo">Logo</a>
+  <nav class="grey lighten-1" role="navigation">
+    <div class="nav-wrapper container"><img id="logo-container" src="www/resources/etlogo.jpeg" class="brand-logo" alt="ET logo" width="80" height="65"></img>
       <ul class="right hide-on-med-and-down">
         <li><a href="#">Navbar Link</a></li>
       </ul>
@@ -26,9 +26,20 @@
       <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
     </div>
   </nav>
+  <ul id="tabs" class="tabs">
+    <li class="tab col s3"><a class="active" href="#dashboard">Dashboard</a></li>
+    <li class="tab col s3"><a href="#requirements">Requeriments</a></li>
+    <li class="tab col s3"><a href="#ufs">UFs</a></li>
+    <li class="tab col s3"><a href="#personalData">Dades Personals</a></li>
+  </ul>
+  <div id="dashboard" class="col s12 grey"></div>
+  <div id="requirements" class="col s12 grey"></div>
+  <div id="ufs" class="col s12 grey"></div>
+  <div id="personalData" class="col s12 grey"></div>
   
 
   <!--  Scripts-->
+  <script src="cordova.js"></script>
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
