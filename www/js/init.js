@@ -3,13 +3,17 @@
 
     $('.sidenav').sidenav();
 
-    //Posar les tabs
+    //Start de Swipeable tabs
     var options = { "swipeable": true };
     var el = document.getElementById('tabs');
     var instance = M.Tabs.init(el, options);
 
     $(document).ready(function(){
-      $('.modal').modal();
+      //Set parameters to the modal
+      $('.modal').modal({
+        dismissible: false
+      });
+      //Open at the start the login modal
       $('.modal').modal('open');
       
     });
