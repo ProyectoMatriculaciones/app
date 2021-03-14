@@ -45,7 +45,7 @@ function onDeviceReady() {
 function validateLogin(){
     var query = $('#inputUsername').val();  
     $.ajax({
-        method: "GET",
+        method: "POST",
         url: "http://localhost:3000/" + query,
         dataType: "json",
       }).done(function(user) {
@@ -53,6 +53,7 @@ function validateLogin(){
         
       }).fail(function() {
         alert("No se ha entrado ningun usuario con ese email.");
+        $('.modal').modal('open');  
       });
 
 }
