@@ -49,7 +49,7 @@ function validateLogin(){
         url: "http://localhost:3000/" + query,
         dataType: "json",
       }).done(function(user) {
-        // DO STUFF HERE
+        // Apply user data
         
       }).fail(function() {
         alert("No se ha entrado ningun usuario con ese email.");
