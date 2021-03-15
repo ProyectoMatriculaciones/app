@@ -43,18 +43,27 @@ function onDeviceReady() {
 }
 
 function validateLogin(){
-    var query = $('#inputUsername').val();  
+    var query = {
+      "username": $('#inputUsername').val(),
+      "password": $('#inputPass').val()
+    }
     $.ajax({
-        method: "POST",
-        url: "http://localhost:3000/" + query,
-        dataType: "json",
-      }).done(function(user) {
-        // Apply user data
-        
-      }).fail(function() {
-        alert("No se ha entrado ningun usuario con ese email.");
-        $('.modal').modal('open');  
-      });
+      method: "POST",
+      headers: {
+              'Content-Type':'application/json'
+          },
+      url: "http://192.168.41.127:3000/login/alumn",
+      contentType: "application/json",
+      crossDomain: true,
+      dataType: "json",
+      data: JSON.stringify(query),
+    }).done(function(response) {
+      console.log(response)	
+    }).fail(function(response) {
+      alert("No se ha entrado ningun usuario con ese email.");		
+      console.log(response)
+      $('.modal').modal('open');
+    });
 
 }
 
