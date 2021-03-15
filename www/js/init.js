@@ -52,7 +52,7 @@ function validateLogin(){
       headers: {
               'Content-Type':'application/json'
           },
-      url: "http://192.168.41.127:3000/login/alumn",
+      url: "https://api-matriculacioones.herokuapp.com/login/alumn",
       contentType: "application/json",
       crossDomain: true,
       dataType: "json",
