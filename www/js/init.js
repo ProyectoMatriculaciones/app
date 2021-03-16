@@ -58,10 +58,13 @@ function validateLogin(){
       dataType: "json",
       data: JSON.stringify(query),
     }).done(function(response) {
-      console.log(response)	
+      
     }).fail(function(response) {
-      alert("No se ha entrado ningun usuario con ese email.");		
-      console.log(response)
+      if(response.responseJSON != undefined){
+        alert(response.responseJSON.statusData);
+      }else{
+        alert("Error de conexión");
+      }
       $('.modal').modal('open');
     });
 
