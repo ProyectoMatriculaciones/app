@@ -12,3 +12,11 @@
 .icon-block .material-icons {
 	font-size: inherit;
 }
+#enrollmentState{
+  text-align: left;
+  align-items: baseline;
+}
+.carousel {
+  
+  height: 100%;
+}

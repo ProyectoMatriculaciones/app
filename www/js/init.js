@@ -10,7 +10,7 @@
     $('.tabs').tabs({ "swipeable": true });
 
     //(WIP) Set carousel tabs height to a 100% of the screen
-    // $(".carousel").style = "height: 100%;";
+    //$('.carousel-slider')[0].style = "height: 100%;";
     
     //Set parameters to the modal
     $('.modal').modal({
