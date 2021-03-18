@@ -58,7 +58,7 @@ function validateLogin(){
       dataType: "json",
       data: JSON.stringify(query),
     }).done(function(response) {
-      //Obtain requeriment data from the current user
+      //Obtain requeriment data from the current user (WIP, currently local)
       var requerimentsArray = [{
           "documentName": "DNI",
           "Status": "green"
@@ -67,9 +67,8 @@ function validateLogin(){
           "Status": "orange"
       }];
       
-        for(i = 0; i < requerimentsArray.length; i++){
-          $('#requirementList').append('<li>'+requerimentsArray[i].documentName+'<span class="dot"></span></li>');
-          alert(requerimentsArray[i].Status);
+      for(i = 0; i < requerimentsArray.length; i++){
+          $('#requirementList').append('<li>'+requerimentsArray[i].documentName+'<span class="dot"></span><button class="modal-close waves-effect waves-green btn-float" id='+requerimentsArray[i].documentName+'>Submit</button></li>');
       };
      
     }).fail(function(response) {
