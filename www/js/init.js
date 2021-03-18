@@ -58,7 +58,20 @@ function validateLogin(){
       dataType: "json",
       data: JSON.stringify(query),
     }).done(function(response) {
+      //Obtain requeriment data from the current user
+      var requerimentsArray = [{
+          "documentName": "DNI",
+          "Status": "green"
+      }, {
+          "documentName": "Payment",
+          "Status": "orange"
+      }];
       
+        for(i = 0; i < requerimentsArray.length; i++){
+          $('#requirementList').append('<li>'+requerimentsArray[i].documentName+'<span class="dot"></span></li>');
+          alert(requerimentsArray[i].Status);
+      };
+     
     }).fail(function(response) {
       if(response.responseJSON != undefined){
         alert(response.responseJSON.statusData);
@@ -71,3 +84,10 @@ function validateLogin(){
 }
 
 $("#signInButton").click(validateLogin)
+
+function changeOverallState(){
+  //Validate by the admins
+  $('.dot').css("background-color"," #5fa249");
+  //Content submitted 
+  $('.dot').css("background-color"," #ffcc00");
+}

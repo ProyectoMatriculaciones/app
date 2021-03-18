@@ -20,3 +20,12 @@
   
   height: 100%;
 }
+.dot {
+  height: 25px;
+  width: 25px;
+  background-color: #db0f0f;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 20px;
+  margin-top: 5px;
+}
