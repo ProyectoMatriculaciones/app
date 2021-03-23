@@ -36,3 +36,7 @@ li .dot{
 #dashboard{
   align-content: center;
 }
+
+#btnSubmit{
+  margin-left: 10px;
+}

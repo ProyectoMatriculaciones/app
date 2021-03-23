@@ -1,3 +1,4 @@
+
 (function($){
   $(function(){
 
@@ -43,9 +44,14 @@ function onDeviceReady() {
 }
 
 function validateLogin(){
+  var responseModal = false;
+  var pass = $('#inputPass').val();
+  // Future var with the local password hashed
+  // var passMd5 = md5(pass);
     var query = {
       "username": $('#inputUsername').val(),
-      "password": $('#inputPass').val()
+      "password": pass
+      
     }
     $.ajax({
       method: "POST",
@@ -59,17 +65,18 @@ function validateLogin(){
       data: JSON.stringify(query),
     }).done(function(response) {
       //Obtain requeriment data from the current user (WIP, currently local)
+      responseModal = true;
       var requerimentsArray = [{
           "documentName": "DNI",
-          "Status": "green"
+          "Status": "red"
       }, {
           "documentName": "Payment",
           "Status": "orange"
       }];
-      
+      var i =0;
       for(i = 0; i < requerimentsArray.length; i++){
           
-          $('#requirementList').append('<li><span class="dot" id=dot'+requerimentsArray[i].documentName+'></span>'+requerimentsArray[i].documentName+'<button class="modal-close waves-effect waves-green btn-float" id="btn'+requerimentsArray[i].documentName+'">Submit</button></li>');
+          $('#requirementList').append('<li><span class="dot" id=dot'+requerimentsArray[i].documentName+'></span>'+requerimentsArray[i].documentName+'<button class="modal-close waves-effect waves-green btn-float" id="btnSubmit">Submit</button></li>');
           if(requerimentsArray[i].Status =="green"){
             
             $("#dot"+requerimentsArray[i].documentName).css("background-color"," #5fa249");
@@ -91,16 +98,16 @@ function validateLogin(){
         alert("Error de conexión");
       }
       $('.modal').modal('open');
+      responseModal=true;
     });
-
+if(responseModal==false){
+  $('.modal').modal('open');
 }
-// $('button').on('click',function(){
-//   // $('#dot'+requerimentsArray[i].documentName).css("background-color"," #ffcc00");
-//   alert(idDot+" "+idBtn);
-// });
+}
+
 
 $("#signInButton").click(validateLogin);
-// $('button').click(launchtestalert);
+
 
 function changeOverallState(){
   //Validate by the admins
@@ -109,12 +116,4 @@ function changeOverallState(){
   $('.dot').css("background-color"," #ffcc00");
 }
 
-// function launchtestalert(){
-//   alert("vaina");
-// }
-// function changeSingularDocumentState(dotId){
-//   var idDot = "#"+dotId;
-//   $(idDot).css("background-color"," #5fa249");
-// }
 
-// $("#buttonSubmit").click(launchtestalert);
