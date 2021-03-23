@@ -68,7 +68,20 @@ function validateLogin(){
       }];
       
       for(i = 0; i < requerimentsArray.length; i++){
-          $('#requirementList').append('<li>'+requerimentsArray[i].documentName+'<span class="dot"></span><button class="modal-close waves-effect waves-green btn-float" id='+requerimentsArray[i].documentName+'>Submit</button></li>');
+          
+          $('#requirementList').append('<li><span class="dot" id=dot'+requerimentsArray[i].documentName+'></span>'+requerimentsArray[i].documentName+'<button class="modal-close waves-effect waves-green btn-float" id="btn'+requerimentsArray[i].documentName+'">Submit</button></li>');
+          if(requerimentsArray[i].Status =="green"){
+            
+            $("#dot"+requerimentsArray[i].documentName).css("background-color"," #5fa249");
+          }else if(requerimentsArray[i].Status =="orange"){
+            
+            $("#dot"+requerimentsArray[i].documentName).css("background-color"," #ffcc00");
+          }
+          
+          $('#requirementList').on("click","button",function(){
+            $(this).parent().children('span').css("background-color"," #ffcc00");
+          });
+         
       };
      
     }).fail(function(response) {
@@ -81,8 +94,13 @@ function validateLogin(){
     });
 
 }
+// $('button').on('click',function(){
+//   // $('#dot'+requerimentsArray[i].documentName).css("background-color"," #ffcc00");
+//   alert(idDot+" "+idBtn);
+// });
 
-$("#signInButton").click(validateLogin)
+$("#signInButton").click(validateLogin);
+// $('button').click(launchtestalert);
 
 function changeOverallState(){
   //Validate by the admins
@@ -90,3 +108,13 @@ function changeOverallState(){
   //Content submitted 
   $('.dot').css("background-color"," #ffcc00");
 }
+
+// function launchtestalert(){
+//   alert("vaina");
+// }
+// function changeSingularDocumentState(dotId){
+//   var idDot = "#"+dotId;
+//   $(idDot).css("background-color"," #5fa249");
+// }
+
+// $("#buttonSubmit").click(launchtestalert);

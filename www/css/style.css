@@ -14,7 +14,6 @@
 }
 #enrollmentState{
   text-align: left;
-  align-items: baseline;
 }
 .carousel {
   
@@ -29,4 +28,11 @@
   margin-left: 20px;
   margin-top: 5px;
   align-self: flex-end;
+}
+
+li .dot{
+  margin-right: 20px;
+}
+#dashboard{
+  align-content: center;
 }
