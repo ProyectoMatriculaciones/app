@@ -68,15 +68,15 @@ function validateLogin(){
       responseModal = true;
       var requerimentsArray = [{
           "documentName": "DNI",
-          "Status": "red"
+          "Status": "grey"
       }, {
-          "documentName": "Payment",
-          "Status": "orange"
+          "documentName": "Pago Matricula",
+          "Status": "grey"
       }];
       var i =0;
       for(i = 0; i < requerimentsArray.length; i++){
           
-          $('#requirementList').append('<li><span class="dot" id=dot'+requerimentsArray[i].documentName+'></span>'+requerimentsArray[i].documentName+'<button class="modal-close waves-effect waves-green btn-float" id="btnSubmit">Submit</button></li>');
+          $('#requirementList').append('<li class="collection-item" id="requirement"><div id="requirement-item"><span class="dot" id=dot'+requerimentsArray[i].documentName+'></span><div>'+requerimentsArray[i].documentName+'</div><div id="documentName">No se ha enviado ningún documento</div><a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>');
           if(requerimentsArray[i].Status =="green"){
             
             $("#dot"+requerimentsArray[i].documentName).css("background-color"," #5fa249");
@@ -85,7 +85,7 @@ function validateLogin(){
             $("#dot"+requerimentsArray[i].documentName).css("background-color"," #ffcc00");
           }
           
-          $('#requirementList').on("click","button",function(){
+          $('#requirementList').on("click","a",function(){
             $(this).parent().children('span').css("background-color"," #ffcc00");
           });
          

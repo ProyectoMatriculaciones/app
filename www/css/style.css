@@ -22,7 +22,7 @@
 .dot {
   height: 25px;
   width: 25px;
-  background-color: #db0f0f;
+  background-color: grey;
   border-radius: 50%;
   display: inline-block;
   margin-left: 20px;
@@ -30,8 +30,13 @@
   align-self: flex-end;
 }
 
-li .dot{
+#requirement-item span{
   margin-right: 20px;
+  height: 25px;
+  width: 25px;
+  background-color: grey;
+  border-radius: 50%;
+  display: inline-block;
 }
 #dashboard{
   align-content: center;
@@ -39,4 +44,20 @@ li .dot{
 
 #btnSubmit{
   margin-left: 10px;
+}
+
+#requirement-item{
+  display:inline-block;
+  width: 100%;
+}
+#requirement-item div{
+  display: inline;
+}
+#requirement-item a{
+  display: inline;
+}
+
+#documentName{
+  margin-left: 20px;
+  color: rgb(50, 172, 180);
 }
