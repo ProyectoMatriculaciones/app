@@ -3,6 +3,8 @@
   $(function(){
 
     $('.sidenav').sidenav();
+    
+    
 
     //Start de Swipeable tabs
     // var options = { "swipeable": true };
@@ -19,7 +21,12 @@
     });
     //Open at the start the login modal
     $('.modal').modal('open');    
-    
+    $('.collapsible').collapsible();
+    $(document).ready(function() {
+      console.log($(".carousel")[0].style);
+      $(".carousel")[0].style = "height: 100vh;";
+      console.log($(".carousel")[0].style);
+    });
 
     
     
@@ -30,6 +37,11 @@
 })(jQuery); // end of jQuery name space
 
 document.addEventListener('deviceready', onDeviceReady, false);
+$(document).ready(function() {
+            console.log($(".carousel")[0].style);
+            $(".carousel")[0].style = "height: 100%;";
+            console.log($(".carousel")[0].style);
+        });
 
  
 function onDeviceReady() {
@@ -42,6 +54,8 @@ function onDeviceReady() {
     
     
 }
+
+  
 
 function validateLogin(){
   var responseModal = false;
@@ -114,6 +128,10 @@ function changeOverallState(){
   $('.dot').css("background-color"," #5fa249");
   //Content submitted 
   $('.dot').css("background-color"," #ffcc00");
+}
+
+function createUfList(){
+
 }
 
 
