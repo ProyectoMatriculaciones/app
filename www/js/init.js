@@ -145,7 +145,7 @@ function createUfList(career) {
     // console.log(career.arrayMO[index].MOCode)
     addCollapsibleLi(career.arrayMO[index].MOCode,career.arrayMO[index].MOName);
     for (let j = 0; j < Object.keys(career.arrayMO[index].arrayUF).length ; j++) {
-      addCheckbox(career.arrayMO[index].MOCode,career.arrayMO[index].arrayUF[j].UFName);
+      addCheckbox(career.arrayMO[index].MOCode,career.arrayMO[index].arrayUF[j].UFName,career.arrayMO[index].arrayUF[j].UFCode);
       
     }
     
@@ -158,11 +158,33 @@ function addCollapsibleLi(id, content) {
   $("#uflist").append('<li><div class="collapsible-header" id="MO'+id+'"><label><input id="' + id + '" name="MO-chk" type="checkbox" /><span></span></label><span>' + content + '</span></div><div id="UF' + id + '" class="collapsible-body"></div></li>');
 }
 
-function addCheckbox(id, content) {
-  $("#UF" + id).append('<p><label><input id="' + content + '" name="UF-chk" type="checkbox" /><span></span></label><span>' + content + '</span></p>');
+function addCheckbox(parentID, content,id) {
+  $("#UF" + parentID).append('<p><label><input id="' + id + '" name="UF-chk" type="checkbox" /><span></span></label><span>' + content + '</span></p>');
+}
+
+function getSelectedCheckbox() {
+  let checkedList = $('input[name="UF-chk"]:checked');
+  let arrayUF = []
+  
+  if (checkedList.length > 0) {
+      arrayUF = [];
+      for (let i = 0; i < checkedList.length; i++) {
+          arrayUF.push(checkedList[i].id.toString());
+      }
+      console.log(arrayUF);
+      return arrayUF;
+  }
+
+  return [];
 }
 
 $("#btnSaveUFs").click(function sendUFsData(){
+  
+ var updateQuery = {
+    "matriculatedUfs" : getSelectedCheckbox(),
+    "email" : "asda@gmail.com"
+  }
+  console.log(updateQuery)
   alert("Datos guardados correctamente")
 });
 
