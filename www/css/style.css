@@ -73,11 +73,23 @@
   height: 50vh;
 }
 
+#profilelist{
+  overflow-y: scroll;
+  height: 50vh;
+}
+
 #submitChangesBtn{
   align-items: center;
 }
 
 #btnSaveUFs{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50vh;
+}
+
+#btnSaveProfile{
   display: block;
   margin-left: auto;
   margin-right: auto;

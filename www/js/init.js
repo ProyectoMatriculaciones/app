@@ -1,4 +1,6 @@
 var token;
+var allProfiles;
+var alumnContent;
 (function ($) {
   $(function () {
 
@@ -55,7 +57,30 @@ function onDeviceReady() {
 
 }
 
+function getAlumDetails(){
+  $.ajax({
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json',
+      'access-token': token
+    },
+    url: 'https://api-matriculacioones.herokuapp.com/get/alumn?username='+$('#inputUsername').val(),
+    contentType: "application/json",
+    crossDomain: true,
+    dataType: "json",
+    // data: JSON.stringify(careerQuery),
+  }).done(function (response) {
+    alumnContent = response;
+    createRequerimentList();
+    requestUserCareer();
+    importRequirementProfiles();
 
+
+  }).fail(function (response) {
+    
+  });
+  
+}
 
 function validateLogin() {
   var responseModal = false;
@@ -79,8 +104,8 @@ function validateLogin() {
     data: JSON.stringify(query),
   }).done(function (response) {
     token = response.statusData;
-    createRequerimentList();
-    requestUserCareer();
+    getAlumDetails();
+    
     //Obtain requeriment data from the current user (WIP, currently local)
     responseModal = true;
 
@@ -112,7 +137,7 @@ function changeOverallState() {
 
 function requestUserCareer(){
    
-  var careerQuery = 'CFPM++++AR10'
+  var careerQuery = alumnContent.termCode.replace(' ','+');
   var career;
   $.ajax({
     method: "GET",
@@ -138,9 +163,6 @@ function requestUserCareer(){
 }
 
 function createUfList(career) {
-  
-  
-  console.log(career)
   for (let index = 0; index < Object.keys(career.arrayMO).length; index++) {
     // console.log(career.arrayMO[index].MOCode)
     addCollapsibleLi(career.arrayMO[index].MOCode,career.arrayMO[index].MOName);
@@ -182,37 +204,143 @@ $("#btnSaveUFs").click(function sendUFsData(){
   
  var updateQuery = {
     "matriculatedUfs" : getSelectedCheckbox(),
-    "email" : "asda@gmail.com"
+    "email" : "muzqtzsge1@caramail.com"
   }
   console.log(updateQuery)
-  alert("Datos guardados correctamente")
+  console.log(JSON.stringify(updateQuery))
+  $.ajax({
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+      'access-token': token
+      
+    },
+    url: 'https://api-matriculacioones.herokuapp.com/update/matriculatedUfs',
+    contentType: "application/json",
+    crossDomain: true,
+    dataType: "json",
+    data: JSON.stringify(updateQuery),
+  }).done(function (response) {
+    alert("Datos guardados correctamente")
+  }).fail(function (response) {
+    alert("Error al enviar los datos")
+  });
+  
 });
 
 function createRequerimentList() {
-  var requerimentsArray = [{
-    "documentName": "DNI",
-    "Status": "grey"
-  }, {
-    "documentName": "Pago Matricula",
-    "Status": "grey"
-  }];
-  var i = 0;
-  for (i = 0; i < requerimentsArray.length; i++) {
+  // var requerimentsArray = [{
+  //   "documentName": "DNI",
+  //   "Status": "grey"
+  // }, {
+  //   "documentName": "Pago Matricula",
+  //   "Status": "grey"
+  // }];
+  
+  // var i = 0;
+  // for (i = 0; i < requerimentsArray.length; i++) {
 
-    $('#requirementList').append('<li class="collection-item" id="requirement"><div id="requirement-item"><span class="dot" id=dot' + requerimentsArray[i].documentName + '></span><div>' + requerimentsArray[i].documentName + '</div><div id="documentName">No se ha enviado ningún documento</div><a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>');
-    if (requerimentsArray[i].Status == "green") {
+  //   $('#requirementList').append('<li class="collection-item" id="requirement"><div id="requirement-item"><span class="dot" id=dot' + requerimentsArray[i].documentName + '></span><div>' + requerimentsArray[i].documentName + '</div><div id="documentName">No se ha enviado ningún documento</div><a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>');
+  //   if (requerimentsArray[i].Status == "green") {
 
-      $("#dot" + requerimentsArray[i].documentName).css("background-color", " #5fa249");
-    } else if (requerimentsArray[i].Status == "orange") {
+  //     $("#dot" + requerimentsArray[i].documentName).css("background-color", " #5fa249");
+  //   } else if (requerimentsArray[i].Status == "orange") {
 
-      $("#dot" + requerimentsArray[i].documentName).css("background-color", " #ffcc00");
-    }
+  //     $("#dot" + requerimentsArray[i].documentName).css("background-color", " #ffcc00");
+  //   }
 
-    $('#requirementList').on("click", "a", function () {
-      $(this).parent().children('span').css("background-color", " #ffcc00");
-    });
+  //   $('#requirementList').on("click", "a", function () {
+  //     $(this).parent().children('span').css("background-color", " #ffcc00");
+  //   });
 
-  };
+  // };
 }
+function addCollapsibleLiProfileRequeriments(id, content) {
+  $("#PR").append('<p><label><input id="'+id+'" name="PR-chk" type="radio" /><span></span></label><span>' + content + '</span></p>');
+}
+
+function getSelectedRadiobutton() {
+  let checkedList = $('input[name="PR-chk"]:checked');
+  if (checkedList.length > 0) {
+      
+      return checkedList[0].id.toString();
+  }
+  
+
+  return undefined;
+}
+
+function importRequirementProfiles(){
+  $.ajax({
+    method: "GET",
+    headers: {
+      'Content-Type': 'application/json',
+      'access-token': token
+    },
+    url: 'https://api-matriculacioones.herokuapp.com/get/allDocumentsProfile',
+    contentType: "application/json",
+    crossDomain: true,
+    dataType: "json",
+    // data: JSON.stringify(careerQuery),
+  }).done(function (response) {
+    allProfiles=response;
+    $("#profilelist").append('<li><div class="collapsible-header" id="profilelistheader"><span> Perfiles de requerimientos</span></div><div id="PR" class="collapsible-body"></div></li>');
+
+    for (let index = 0; index < response.length; index++) {
+      addCollapsibleLiProfileRequeriments(response[index].name,response[index].name);
+      
+    }
+    $("#PR").append('<div class="collapsible-header" id="submitChangesBtnProfile"><a class="waves-effect waves-light btn-large" id="btnSaveProfile">Guardar Perfil</a></div>');
+    $("#btnSaveProfile").click(function(){
+      var selectedProfile = getSelectedRadiobutton();
+      if(selectedProfile!=undefined){
+        if(allProfiles!=undefined){
+          var profile;
+          for (let index = 0; index < allProfiles.length; index++) {
+            const element = allProfiles[index];
+            if(element.name==selectedProfile){
+              profile=allProfiles[index]
+            }
+          }
+          updateProfile(profile);
+        }
+      }else{
+        alert("No hay un perfil selecionado")
+      }
+    });
+    
+
+  //  alert(JSON.stringify(response));
+
+
+  }).fail(function (response) {
+    alert("Error con el ciclo del usuario")
+  });
+}
+
+function updateProfile(profile){
+  var profileQuery = {
+    "documentsProfile": profile,
+    "email":alumnContent.email
+  }
+  $.ajax({
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+      'access-token': token
+      
+    },
+    url: 'https://api-matriculacioones.herokuapp.com/update/selectedDocumentsProfile',
+    contentType: "application/json",
+    crossDomain: true,
+    dataType: "json",
+    data: JSON.stringify(profileQuery),
+  }).done(function (response) {
+    alert("Perfil guardado correctamente")
+  }).fail(function (response) {
+    alert("Error al enviar el perfil")
+  });
+}
+
 
 
