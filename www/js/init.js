@@ -162,6 +162,10 @@ function addCheckbox(id, content) {
   $("#UF" + id).append('<p><label><input id="' + content + '" name="UF-chk" type="checkbox" /><span></span></label><span>' + content + '</span></p>');
 }
 
+$("#btnSaveUFs").click(function sendUFsData(){
+  alert("Datos guardados correctamente")
+});
+
 function createRequerimentList() {
   var requerimentsArray = [{
     "documentName": "DNI",
