@@ -79,9 +79,8 @@ function validateLogin() {
     data: JSON.stringify(query),
   }).done(function (response) {
     token = response.statusData;
-    alert(token);
     createRequerimentList();
-    createUfList();
+    requestUserCareer();
     //Obtain requeriment data from the current user (WIP, currently local)
     responseModal = true;
 
@@ -111,10 +110,10 @@ function changeOverallState() {
   $('.dot').css("background-color", " #ffcc00");
 }
 
-function createUfList() {
-  
-   var careerQuery = 'CFPM++++AR10'
+function requestUserCareer(){
    
+  var careerQuery = 'CFPM++++AR10'
+  var career;
   $.ajax({
     method: "GET",
     headers: {
@@ -127,13 +126,40 @@ function createUfList() {
     dataType: "json",
     // data: JSON.stringify(careerQuery),
   }).done(function (response) {
-   alert(JSON.stringify(response));
+    career = response;
+    createUfList(career);
+  //  alert(JSON.stringify(response));
 
 
   }).fail(function (response) {
-    
+    alert("Error con el ciclo del usuario")
   });
   
+}
+
+function createUfList(career) {
+  
+  
+  console.log(career)
+  for (let index = 0; index < Object.keys(career.arrayMO).length; index++) {
+    // console.log(career.arrayMO[index].MOCode)
+    addCollapsibleLi(career.arrayMO[index].MOCode,career.arrayMO[index].MOName);
+    for (let j = 0; j < Object.keys(career.arrayMO[index].arrayUF).length ; j++) {
+      addCheckbox(career.arrayMO[index].MOCode,career.arrayMO[index].arrayUF[j].UFName);
+      
+    }
+    
+    
+  }
+  
+}
+
+function addCollapsibleLi(id, content) {
+  $("#uflist").append('<li><div class="collapsible-header" id="MO'+id+'"><label><input id="' + id + '" name="MO-chk" type="checkbox" /><span></span></label><span>' + content + '</span></div><div id="UF' + id + '" class="collapsible-body"></div></li>');
+}
+
+function addCheckbox(id, content) {
+  $("#UF" + id).append('<p><label><input id="' + content + '" name="UF-chk" type="checkbox" /><span></span></label><span>' + content + '</span></p>');
 }
 
 function createRequerimentList() {
