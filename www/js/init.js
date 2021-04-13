@@ -173,6 +173,14 @@ function createUfList(career) {
       addCheckbox(career.arrayMO[index].MOCode,career.arrayMO[index].arrayUF[j].UFName,career.arrayMO[index].arrayUF[j].UFCode);
       
     }
+    $('#'+career.arrayMO[index].MOCode+'').on("change",function(){
+      if($('#'+career.arrayMO[index].MOCode+'').prop("checked")){
+        $('#UF'+career.arrayMO[index].MOCode+'').children("p").children("label").children("input").prop('checked',true)
+      }else{
+        $('#UF'+career.arrayMO[index].MOCode+'').children("p").children("label").children("input").prop('checked',false)
+
+      }
+    })
     
     
   }
@@ -189,6 +197,22 @@ function addCheckbox(parentID, content,id) {
 
 function getSelectedCheckbox() {
   let checkedList = $('input[name="UF-chk"]:checked');
+  let arrayUF = []
+  
+  if (checkedList.length > 0) {
+      arrayUF = [];
+      for (let i = 0; i < checkedList.length; i++) {
+          arrayUF.push(checkedList[i].id.toString());
+      }
+      console.log(arrayUF);
+      return arrayUF;
+  }
+
+  return [];
+}
+
+function selectChildrenUFs() {
+  let checkedList = $('input[name="MO-chk"]:checked');
   let arrayUF = []
   
   if (checkedList.length > 0) {
