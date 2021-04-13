@@ -18,11 +18,13 @@ var alumnContent;
     //$('.carousel-slider')[0].style = "height: 100%;";
 
     //Set parameters to the modal
-    $('.modal').modal({
+    $('#modal1').modal({
       dismissible: false
     });
+   
+    
     //Open at the start the login modal
-    $('.modal').modal('open');
+    $('#modal1').modal('open');
     $('.collapsible').collapsible();
     $(document).ready(function () {
       console.log($(".carousel")[0].style);
@@ -74,6 +76,7 @@ function getAlumDetails(){
     createRequerimentList();
     requestUserCareer();
     importRequirementProfiles();
+    
 
 
   }).fail(function (response) {
@@ -116,11 +119,11 @@ function validateLogin() {
     } else {
       alert("Error de conexión");
     }
-    $('.modal').modal('open');
+    $('#modal1').modal('open');
     responseModal = true;
   });
   if (responseModal == false) {
-    $('.modal').modal('open');
+    $('#modal1').modal('open');
   }
 }
 
@@ -229,32 +232,25 @@ $("#btnSaveUFs").click(function sendUFsData(){
 });
 
 function createRequerimentList() {
-  // var requerimentsArray = [{
-  //   "documentName": "DNI",
-  //   "Status": "grey"
-  // }, {
-  //   "documentName": "Pago Matricula",
-  //   "Status": "grey"
-  // }];
+
+  var requerimentsArray = alumnContent.selectedDocumentsProfile.arrayDoc;
+  console.log(requerimentsArray);
   
-  // var i = 0;
-  // for (i = 0; i < requerimentsArray.length; i++) {
+  
+  for (var i = 0; i < requerimentsArray.length; i++) {
 
-  //   $('#requirementList').append('<li class="collection-item" id="requirement"><div id="requirement-item"><span class="dot" id=dot' + requerimentsArray[i].documentName + '></span><div>' + requerimentsArray[i].documentName + '</div><div id="documentName">No se ha enviado ningún documento</div><a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>');
-  //   if (requerimentsArray[i].Status == "green") {
+    $('#requirementList').append('<li class="collection-item" id="requirement"><div id="requirement-item"><span class="dot" id=dot' + requerimentsArray[i].documentName + '></span><div>' + requerimentsArray[i].documentName + '</div><div id="documentName">No se ha enviado ningún documento</div><a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>');
+    if(requerimentsArray[i].filePath){
+      $("#dot" + requerimentsArray[i].documentName).css("background-color", " #ffcc00");
+    }
+   
+    $('#requirementList').on("click", "a", function () {
+      $(this).parent().children('span').css("background-color", " #ffcc00");
+    });
 
-  //     $("#dot" + requerimentsArray[i].documentName).css("background-color", " #5fa249");
-  //   } else if (requerimentsArray[i].Status == "orange") {
-
-  //     $("#dot" + requerimentsArray[i].documentName).css("background-color", " #ffcc00");
-  //   }
-
-  //   $('#requirementList').on("click", "a", function () {
-  //     $(this).parent().children('span').css("background-color", " #ffcc00");
-  //   });
-
-  // };
+  };
 }
+
 function addCollapsibleLiProfileRequeriments(id, content) {
   $("#PR").append('<p><label><input id="'+id+'" name="PR-chk" type="radio" /><span></span></label><span>' + content + '</span></p>');
 }
@@ -269,6 +265,8 @@ function getSelectedRadiobutton() {
 
   return undefined;
 }
+
+
 
 function importRequirementProfiles(){
   $.ajax({
@@ -290,23 +288,34 @@ function importRequirementProfiles(){
       addCollapsibleLiProfileRequeriments(response[index].name,response[index].name);
       
     }
-    $("#PR").append('<div class="collapsible-header" id="submitChangesBtnProfile"><a class="waves-effect waves-light btn-large" id="btnSaveProfile">Guardar Perfil</a></div>');
+    $("#PR").append('<div class="collapsible-header" id="submitChangesBtnProfile"><a class="waves-effect waves-light btn-small" id="btnSaveProfile">Guardar Perfil</a></div>');
     $("#btnSaveProfile").click(function(){
-      var selectedProfile = getSelectedRadiobutton();
-      if(selectedProfile!=undefined){
-        if(allProfiles!=undefined){
-          var profile;
-          for (let index = 0; index < allProfiles.length; index++) {
-            const element = allProfiles[index];
-            if(element.name==selectedProfile){
-              profile=allProfiles[index]
+      $('#modalUpdateProfile').modal({
+        dismissible: false
+      });
+      $("#modalUpdateProfile").modal('open');
+      $("#acceptProfile").click(function(){
+        var selectedProfile = getSelectedRadiobutton();
+        if(selectedProfile!=undefined){
+          if(allProfiles!=undefined){
+            var profile;
+            for (let index = 0; index < allProfiles.length; index++) {
+              const element = allProfiles[index];
+              if(element.name==selectedProfile){
+                profile=allProfiles[index]
+              }
             }
+            updateProfile(profile);
+            alumnContent.selectedDocumentsProfile = profile;
+            $('#requirementList').empty();
+            createRequerimentList();
           }
-          updateProfile(profile);
+        }else{
+          alert("No hay un perfil selecionado")
         }
-      }else{
-        alert("No hay un perfil selecionado")
-      }
+        
+      })
+        
     });
     
 
