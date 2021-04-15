@@ -231,7 +231,7 @@ $("#btnSaveUFs").click(function sendUFsData(){
   
  var updateQuery = {
     "matriculatedUfs" : getSelectedCheckbox(),
-    "email" : "muzqtzsge1@caramail.com"
+    "email" : alumnContent.email
   }
   console.log(updateQuery)
   console.log(JSON.stringify(updateQuery))

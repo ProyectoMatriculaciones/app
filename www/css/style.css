@@ -18,8 +18,18 @@
 .icon-block .material-icons {
 	font-size: inherit;
 }
+
+#enrollmentStateContainer{
+  align-items: center;
+  
+}
+
 #enrollmentState{
-  text-align: left;
+  /* text-align: left; */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50vh;
 }
 /* .carousel {
   
@@ -31,7 +41,7 @@
   background-color: grey;
   border-radius: 50%;
   display: inline-block;
-  margin-left: 20px;
+  margin-left: 15px;
   margin-top: 5px;
   align-self: flex-end;
 }
