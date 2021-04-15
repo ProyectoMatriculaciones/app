@@ -256,23 +256,25 @@ $("#btnSaveUFs").click(function sendUFsData(){
 });
 
 function createRequerimentList() {
-
-  var requerimentsArray = alumnContent.selectedDocumentsProfile.arrayDoc;
-  console.log(requerimentsArray);
+  if(alumnContent.selectedDocumentsProfile){
+    var requerimentsArray = alumnContent.selectedDocumentsProfile.arrayDoc;
+    console.log(requerimentsArray);
+    
+    
+    for (var i = 0; i < requerimentsArray.length; i++) {
   
+      $('#requirementList').append('<li class="collection-item" id="requirement"><div id="requirement-item"><span class="dot" id=dot' + requerimentsArray[i].documentName + '></span><div>' + requerimentsArray[i].documentName + '</div><div id="documentName">No se ha enviado ningún documento</div><a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>');
+      if(requerimentsArray[i].filePath){
+        $("#dot" + requerimentsArray[i].documentName).css("background-color", " #ffcc00");
+      }
+     
+      $('#requirementList').on("click", "a", function () {
+        $(this).parent().children('span').css("background-color", " #ffcc00");
+      });
   
-  for (var i = 0; i < requerimentsArray.length; i++) {
-
-    $('#requirementList').append('<li class="collection-item" id="requirement"><div id="requirement-item"><span class="dot" id=dot' + requerimentsArray[i].documentName + '></span><div>' + requerimentsArray[i].documentName + '</div><div id="documentName">No se ha enviado ningún documento</div><a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>');
-    if(requerimentsArray[i].filePath){
-      $("#dot" + requerimentsArray[i].documentName).css("background-color", " #ffcc00");
-    }
-   
-    $('#requirementList').on("click", "a", function () {
-      $(this).parent().children('span').css("background-color", " #ffcc00");
-    });
-
-  };
+    };
+  }
+ 
 }
 
 function addCollapsibleLiProfileRequeriments(id, content) {
