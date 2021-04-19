@@ -120,7 +120,7 @@
 
 #profilelist{
   overflow-y: scroll;
-  height: 50vh;
+  /* height: 30vh; */
 }
 
 #submitChangesBtn{
@@ -142,10 +142,11 @@
 }
 
 #collapsibleProfileList{
-  height: 40vh;
+  /* height: 30vh; */
 }
+
+
 #requirementListContainer{
   overflow-y: scroll;
-  height: 60vh;
-  margin-top: 10px;
+  /* height: 70vh; */
 }
