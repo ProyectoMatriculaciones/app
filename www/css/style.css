@@ -47,15 +47,48 @@
   margin-top: 5px;
   align-self: flex-end;
 }
+.baseDot {
+  height: 25px;
+  width: 25px;
+  background-color: rgb(179, 179, 179);
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 15px;
+  margin-top: 5px;
+  align-self: flex-end;
+  margin-right: 20px;
+}
+.validatingDot {
+  height: 25px;
+  width: 25px;
+  background-color: #c29b00 ;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 15px;
+  margin-top: 5px;
+  align-self: flex-end;
+  margin-right: 20px;
+}
+.validatedDot {
+  height: 25px;
+  width: 25px;
+  background-color: #1a4600;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 15px;
+  margin-top: 5px;
+  align-self: flex-end;
+  margin-right: 20px;
+}
 
-#requirement-item span{
+/* #requirement-item span{
   margin-right: 20px;
   height: 25px;
   width: 25px;
   background-color: grey;
   border-radius: 50%;
   display: inline-block;
-}
+} */
 #dashboard{
   align-content: center;
 }

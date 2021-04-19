@@ -274,14 +274,19 @@ function createRequerimentList() {
       var name = requerimentsArray[i].documentName;
       name = name.replace(' ','_');
         
-      $('#requirementList').append('<li class="collection-item" id="requirement"><div id="requirement-item"><span class="dot" id="dot' + name + '"></span><div>' + requerimentsArray[i].documentName + '</div><div id="documentName">No se ha enviado ningún documento</div><a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>');
+      $('#requirementList').append('<li class="collection-item" id="requirement"><div id="requirement-item"><span class="baseDot" id="baseDot' + name + '"></span><span class="validatingDot" id="validatingDot' + name + '"></span><span class="validatedDot" id="validatedDot' + name + '"></span><div>' + requerimentsArray[i].documentName + '</div><div id="documentName">No se ha enviado ningún documento</div><a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>');
       if(requerimentsArray[i].filePath){
-        
-        $(("#dot" + name)).css("background-color", " #ffcc00");
+        $(("#baseDot" + name)).css("background-color", " #444444");
+        $(("#validatingDot" + name)).css("background-color", " #ffcc00");
+        $(("#validatedDot" + name)).css("background-color", " #1a4600");
+      }else if(requerimentsArray[i].filePath && requerimentsArray[i].validated){
+        $(("#validatedDot" + name)).css("background-color", " #48ed07");
       }
      
       $('#requirementList').on("click", "a", function () {
-        $(this).parent().children('span').css("background-color", " #ffcc00");
+        $(this).parent().children('.baseDot').css("background-color", " #444444");
+        $(this).parent().children('.validatingDot').css("background-color", " #ffcc00");
+        $(this).parent().children('.validatedDot').css("background-color", " #1a4600");
         changeOverallState();
       });
   
