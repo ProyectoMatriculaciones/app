@@ -28,9 +28,9 @@ var requerimentsArray;
     $('#modal1').modal('open');
     $('.collapsible').collapsible();
     $(document).ready(function () {
-      console.log($(".carousel")[0].style);
+      
       $(".carousel")[0].style = "height: 100vh;";
-      console.log($(".carousel")[0].style);
+      
     });
 
 
@@ -43,9 +43,9 @@ var requerimentsArray;
 
 document.addEventListener('deviceready', onDeviceReady, false);
 $(document).ready(function () {
-  console.log($(".carousel")[0].style);
+  
   $(".carousel")[0].style = "height: 100%;";
-  console.log($(".carousel")[0].style);
+  
 });
 
 
@@ -178,7 +178,7 @@ function requestUserCareer(){
 
 function createUfList(career) {
   for (let index = 0; index < Object.keys(career.arrayMO).length; index++) {
-    // console.log(career.arrayMO[index].MOCode)
+    
     addCollapsibleLi(career.arrayMO[index].MOCode,career.arrayMO[index].MOName);
     for (let j = 0; j < Object.keys(career.arrayMO[index].arrayUF).length ; j++) {
       addCheckbox(career.arrayMO[index].MOCode,career.arrayMO[index].arrayUF[j].UFName,career.arrayMO[index].arrayUF[j].UFCode);
@@ -215,7 +215,7 @@ function getSelectedCheckbox() {
       for (let i = 0; i < checkedList.length; i++) {
           arrayUF.push(checkedList[i].id.toString());
       }
-      console.log(arrayUF);
+      
       return arrayUF;
   }
 
@@ -231,7 +231,7 @@ function selectChildrenUFs() {
       for (let i = 0; i < checkedList.length; i++) {
           arrayUF.push(checkedList[i].id.toString());
       }
-      console.log(arrayUF);
+      
       return arrayUF;
   }
 
@@ -244,8 +244,6 @@ $("#btnSaveUFs").click(function sendUFsData(){
     "matriculatedUfs" : getSelectedCheckbox(),
     "email" : alumnContent.email
   }
-  console.log(updateQuery)
-  console.log(JSON.stringify(updateQuery))
   $.ajax({
     method: "POST",
     headers: {
@@ -269,15 +267,17 @@ $("#btnSaveUFs").click(function sendUFsData(){
 function createRequerimentList() {
   if(alumnContent.selectedDocumentsProfile){
     requerimentsArray = alumnContent.selectedDocumentsProfile.arrayDoc;
-    console.log(requerimentsArray);
+    
     
     
     for (var i = 0; i < requerimentsArray.length; i++) {
-  
-      $('#requirementList').append('<li class="collection-item" id="requirement"><div id="requirement-item"><span class="dot" id="dot' + requerimentsArray[i].documentName + '"></span><div>' + requerimentsArray[i].documentName + '</div><div id="documentName">No se ha enviado ningún documento</div><a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>');
+      var name = requerimentsArray[i].documentName;
+      name = name.replace(' ','_');
+        
+      $('#requirementList').append('<li class="collection-item" id="requirement"><div id="requirement-item"><span class="dot" id="dot' + name + '"></span><div>' + requerimentsArray[i].documentName + '</div><div id="documentName">No se ha enviado ningún documento</div><a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>');
       if(requerimentsArray[i].filePath){
-        var name = requerimentsArray[i].documentName;
-        $("#dot" + name).css("background-color", " #ffcc00");
+        
+        $(("#dot" + name)).css("background-color", " #ffcc00");
       }
      
       $('#requirementList').on("click", "a", function () {

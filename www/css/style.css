@@ -18,7 +18,9 @@
 .icon-block .material-icons {
 	font-size: inherit;
 }
-
+#dashboardList{
+  align-content: center;
+}
 #enrollmentStateContainer{
   align-items: center;
   
