@@ -134,14 +134,25 @@ $("#signInButton").click(validateLogin);
 
 function changeOverallState() {
   var validatingState = 0;
+  var validatedState = 0;
   for (let index = 0; index < requerimentsArray.length; index++) {
     if(requerimentsArray[index].filePath){
       validatingState++;
+      if(requerimentsArray[index].validated){
+        validatedState++;
+      }
     }
     
   }
   if(validatingState==requerimentsArray.length){
-    $('#validatingStatus').css("background-color", " #ffcc00");
+    $('#baseStatus').css("background-color", " #444444");
+    
+    if(validatedState==requerimentsArray.length){
+      $('#validatingStatus').css("background-color", " #48ed07");
+    }else{
+      $('#validatedStatus').css("background-color", " #ffcc00");
+    }
+    
   }
 //   //Validate by the admins
 //   $('.dot').css("background-color", " #5fa249");
