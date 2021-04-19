@@ -53,10 +53,21 @@
   background-color: rgb(179, 179, 179);
   border-radius: 50%;
   display: inline-block;
-  margin-left: 5px;
+  margin-left: 2px;
   margin-top: 5px;
   align-self: flex-end;
-  margin-right: 5px;
+  margin-right: 2px;
+}
+.deniedDot {
+  height: 25px;
+  width: 25px;
+  background-color: #9c0303;
+  border-radius: 50%;
+  display: inline-block;
+  margin-left: 2px;
+  margin-top: 5px;
+  align-self: flex-end;
+  margin-right: 2px;
 }
 .validatingDot {
   height: 25px;
@@ -64,10 +75,10 @@
   background-color: #c29b00 ;
   border-radius: 50%;
   display: inline-block;
-  margin-left: 5px;
+  margin-left: 2px;
   margin-top: 5px;
   align-self: flex-end;
-  margin-right: 5px;
+  margin-right: 2px;
 }
 .validatedDot {
   height: 25px;
@@ -75,11 +86,13 @@
   background-color: #1a4600;
   border-radius: 50%;
   display: inline-block;
-  margin-left: 5px;
+  margin-left: 2px;
   margin-top: 5px;
   align-self: flex-end;
-  margin-right: 5px;
+  margin-right: 2px;
 }
+
+
 
 /* #requirement-item span{
   margin-right: 20px;
