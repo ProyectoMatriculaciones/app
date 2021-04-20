@@ -146,18 +146,19 @@ function changeOverallState() {
   }
   if(validatingState==requerimentsArray.length){
     $('#baseStatus').css("background-color", " #444444");
-    
+    $('#baseStatus').css("width", " 25px");
+    $('#baseStatus').css("height", " 25px");
     if(validatedState==requerimentsArray.length){
       $('#validatedStatus').css("background-color", " #48ed07");
+      $('#validatedStatus').css("width", " 30px");
+    $('#validatedStatus').css("height", " 30px");
     }else{
       $('#validatingStatus').css("background-color", " #ffcc00");
+      $('#validatingStatus').css("width", " 30px");
+    $('#validatingStatus').css("height", " 30px");
     }
     
   }
-//   //Validate by the admins
-//   $('.dot').css("background-color", " #5fa249");
-//   //Content submitted 
-//   $('.dot').css("background-color", " #ffcc00");
  }
 
 function requestUserCareer(){
@@ -293,11 +294,15 @@ function createRequerimentList() {
         +inputEmail
         +inputProfileName
         +inputDocumentName  
-        +'<input id="f' + id + '" type="file" name="file" style="visibility: hidden" required/>'
-        +'<span id="txt' + id + '" style="margin-right:5px;"></span>'
-        +'<input type="button" value="Seleccionar archivo" style="margin-right: 20px;" id="b' + id + '"> </input>'
-        +'<input type="submit" value="Subir archivo"/>'
-        +'</form>';
+        +'<input id="f' + id + '" type="file" name="file" style="visibility: hidden" accept="image/png, image/jpeg, .jpg, .pdf" required/>'
+        +'<span id="txt' + id + '" style="margin-right:5px;"></span>';
+        if(!requerimentsArray[i].validated)
+        {
+          uploadForm+='<input type="button" value="Seleccionar archivo" style="margin-right: 20px;" id="b' + id + '"> </input>'
+          +'<input type="submit" value="Subir archivo"/>'
+  
+        }
+        uploadForm+='</form>';
 
       var name = requerimentsArray[i].documentName;
       name = name.replace(' ','_');
@@ -330,8 +335,14 @@ function createRequerimentList() {
         processData: false    
       }).done(function (response) {
           $('#baseDot' + fData.get("documentName").replace(' ','_')).css("background-color", " #444444");
+          $('#baseDot' + fData.get("documentName").replace(' ','_')).css("width", " 25px");
+          $('#baseDot' + fData.get("documentName").replace(' ','_')).css("height", " 25px");
           $('#validatingDot' + fData.get("documentName").replace(' ','_')).css("background-color", " #ffcc00");
+          $('#validatingDot' + fData.get("documentName").replace(' ','_')).css("width", " 30px");
+          $('#validatingDot' + fData.get("documentName").replace(' ','_')).css("height", " 30px");
           $('#validatedDot' + fData.get("documentName").replace(' ','_')).css("background-color", " #1a4600");
+          $('#validatedDot' + fData.get("documentName").replace(' ','_')).css("width", " 25px");
+          $('#validatedDot' + fData.get("documentName").replace(' ','_')).css("height", " 25px");
           changeOverallState();
           alert("Fichero subido correctamente")
       }).fail(function (response) {
@@ -358,12 +369,24 @@ function createRequerimentList() {
 
       // Set state
       if(requerimentsArray[i].filePath && requerimentsArray[i].validated){
+        $(("#baseDot" + name)).css("background-color", " #444444");
+        $(('#baseDot' + name)).css("width", " 25px");
+        $(('#baseDot' + name)).css("height", " 25px");
         $(("#validatedDot" + name)).css("background-color", " #48ed07");
+        $(('#validatedDot' + name)).css("width", " 30px");
+        $(('#validatedDot' + name)).css("height", " 30px");
+
       }
       else if(requerimentsArray[i].filePath){
         $(("#baseDot" + name)).css("background-color", " #444444");
+        $(('#baseDot' + name)).css("width", " 25px");
+        $(('#baseDot' + name)).css("height", " 25px");
         $(("#validatingDot" + name)).css("background-color", " #ffcc00");
+        $(('#validatingDot' + name)).css("width", " 30px");
+        $(('#validatingDot' + name)).css("height", " 30px");
         $(("#validatedDot" + name)).css("background-color", " #1a4600");
+        $(('#validatedDot' + name)).css("width", " 25px");
+        $(('#validatedDot' + name)).css("height", " 25px");
       } 
      
       
