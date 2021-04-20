@@ -148,9 +148,9 @@ function changeOverallState() {
     $('#baseStatus').css("background-color", " #444444");
     
     if(validatedState==requerimentsArray.length){
-      $('#validatingStatus').css("background-color", " #48ed07");
+      $('#validatedStatus').css("background-color", " #48ed07");
     }else{
-      $('#validatedStatus').css("background-color", " #ffcc00");
+      $('#validatingStatus').css("background-color", " #ffcc00");
     }
     
   }
@@ -277,30 +277,96 @@ $("#btnSaveUFs").click(function sendUFsData(){
 
 function createRequerimentList() {
   if(alumnContent.selectedDocumentsProfile){
-    requerimentsArray = alumnContent.selectedDocumentsProfile.arrayDoc;
+    requerimentsArray = alumnContent.selectedDocumentsProfile.arrayDoc;    
+    var endpointUrl = 'https://api-matriculacioones.herokuapp.com';    
+    var profileName = alumnContent.selectedDocumentsProfile.name;
+    var inputEmail = '<input type="hidden" name="email" value="' + alumnContent.email + '" required/>';
+    var inputProfileName = '<input type="hidden" name="profileName" value="' + profileName + '" required/>';//accept="image/png, image/jpeg, image/jpg
     
     
     
     for (var i = 0; i < requerimentsArray.length; i++) {
+      // create form
+      var id = ('form-' + profileName + '-' + requerimentsArray[i].documentName.replace(' ', '')).replace(' ', '')
+      var inputDocumentName = '<input type="hidden" name="documentName" value="' + requerimentsArray[i].documentName + '" required/>';      
+      var uploadForm = '<form id="'+ id +'" method="POST" action="' + endpointUrl + '/upload/documentsFile' + 'enctype="multipart/form-data">'
+        +inputEmail
+        +inputProfileName
+        +inputDocumentName  
+        +'<input id="f' + id + '" type="file" name="file" style="visibility: hidden" required/>'
+        +'<span id="txt' + id + '" style="margin-right:5px;"></span>'
+        +'<input type="button" value="Seleccionar archivo" style="margin-right: 20px;" id="b' + id + '"> </input>'
+        +'<input type="submit" value="Subir archivo"/>'
+        +'</form>';
+
       var name = requerimentsArray[i].documentName;
       name = name.replace(' ','_');
         
-      $('#requirementList').append('<li class="collection-item" id="requirement"><div id="requirement-item"><span class="baseDot" id="baseDot' + name + '"></span><span class="deniedDot" id="deniedDot' + name + '"></span><span class="validatingDot" id="validatingDot' + name + '"></span><span class="validatedDot" id="validatedDot' + name + '"></span><div>' + requerimentsArray[i].documentName + '</div><div id="documentName">No se ha enviado ningún documento</div><a href="#!" class="secondary-content"><i class="material-icons">send</i></a></div></li>');
-      if(requerimentsArray[i].filePath){
+      $('#requirementList').append('<li class="collection-item" id="requirement"><div id="requirement-item"><span class="baseDot" id="baseDot' + name + '"></span><span class="deniedDot" id="deniedDot' + name + '"></span><span class="validatingDot" id="validatingDot' + name + '"></span><span class="validatedDot" id="validatedDot' + name + '"></span><div>' + requerimentsArray[i].documentName + '</div>' + uploadForm +'</div></li>');
+      
+
+
+      $("#f" + id).change(function() {
+        var changeFileName = this.files[0].name
+         $("#txt" + $(this).attr('id').substring(1)).html(changeFileName);
+      });
+
+      $("#b" + id).click(function(){
+        $("#f" + $(this).attr('id').substring(1)).click()
+      })
+      // Replace submit form function
+      $("#" + id).submit(function(e){
+      e.preventDefault();
+      var fData = new FormData($(this)[0]);       
+      $.ajax({
+        url: endpointUrl + '/upload/documentsFile',
+        headers: {
+            'access-token': token      
+          },
+        crossDomain: true,
+        type: 'POST',
+        data : fData, 
+        contentType : false,
+        processData: false    
+      }).done(function (response) {
+          $('#baseDot' + fData.get("documentName").replace(' ','_')).css("background-color", " #444444");
+          $('#validatingDot' + fData.get("documentName").replace(' ','_')).css("background-color", " #ffcc00");
+          $('#validatedDot' + fData.get("documentName").replace(' ','_')).css("background-color", " #1a4600");
+          changeOverallState();
+          alert("Fichero subido correctamente")
+      }).fail(function (response) {
+          alert("Error al subir el fichero")
+      });
+      return false;
+    });
+
+      // Set file label if exists
+    if(requerimentsArray[i].filePath)
+    {
+      var lastIndex = requerimentsArray[i].filePath.lastIndexOf("/");
+      if (lastIndex < 0)
+      {
+        lastIndex = requerimentsArray[i].filePath.lastIndexOf("\\");
+      }
+      var fileName = requerimentsArray[i].filePath.substring(lastIndex+1)
+      $("#txt" + id).html(fileName)
+    }
+    else
+    {
+    	$("#txt" + id).html("No se ha subido el archivo")
+    }
+
+      // Set state
+      if(requerimentsArray[i].filePath && requerimentsArray[i].validated){
+        $(("#validatedDot" + name)).css("background-color", " #48ed07");
+      }
+      else if(requerimentsArray[i].filePath){
         $(("#baseDot" + name)).css("background-color", " #444444");
         $(("#validatingDot" + name)).css("background-color", " #ffcc00");
         $(("#validatedDot" + name)).css("background-color", " #1a4600");
-      }else if(requerimentsArray[i].filePath && requerimentsArray[i].validated){
-        $(("#validatedDot" + name)).css("background-color", " #48ed07");
-      }
+      } 
      
-      $('#requirementList').on("click", "a", function () {
-        $(this).parent().children('.baseDot').css("background-color", " #444444");
-        $(this).parent().children('.validatingDot').css("background-color", " #ffcc00");
-        $(this).parent().children('.validatedDot').css("background-color", " #1a4600");
-        changeOverallState();
-      });
-  
+      
     };
     changeOverallState();
   }
